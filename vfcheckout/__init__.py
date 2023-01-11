@@ -1,8 +1,8 @@
-from . import async_
-from . import sync
+from .async_ import check as acheck
+from .sync import check as check
 
 
 __all__ = (
-    'async_',
-    'sync',
+    'acheck',
+    'check',
 )

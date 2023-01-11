@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 import enum
 
 import discord
 from discord.ext import commands
-import vfcheckout
+from vfcheckout import acheck
 
 __all__ = (
     'VFCCheckFailure',
@@ -42,7 +44,7 @@ def guild_is_active(product_name: str):
             guild_id = ctx
         else:
             guild_id = ctx.id
-        v = await vfcheckout.async_.check(
+        v = await acheck(
             product_name=product_name,
             guild_id=guild_id,
         )
@@ -60,7 +62,7 @@ def user_is_active(product_name: str):
             user_id = ctx
         else:
             user_id = ctx.id
-        v = await vfcheckout.async_.check(
+        v = await acheck(
             product_name=product_name,
             user_id=user_id,
         )

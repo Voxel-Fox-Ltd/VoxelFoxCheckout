@@ -6,6 +6,8 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools]
 packages = [
     "vfcheckout",
+    "vfcheckout.async_",
+    "vfcheckout.sync",
     "discord.ext.vfc",
 ]
 
