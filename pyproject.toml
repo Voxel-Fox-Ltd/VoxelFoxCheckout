@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+
+[tool.setuptools]
+packages = [
+    "vfcheckout",
+    "discord.ext.vfc",
+]
+
+
+[project]
+name = "vfcheckout"
+version = "0.0.1"
+description = "A product purchase checker for VoxelFox.co.uk's checkout system."
+authors = [
+    {name = "Kae Bartlett", email = "kae@voxelfox.co.uk"},
+]
+readme = "README.md"
+requires-python = ">=3.9"
+license = {file = "LICENSE"}
+classifiers = [
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+dependencies = []
+[project.optional-dependencies]
+    async = ["aiohttp"]
+    sync = ["requests"]
+    discord = ["novus"]
