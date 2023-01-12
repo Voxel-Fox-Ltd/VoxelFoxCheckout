@@ -36,10 +36,15 @@ def check(
         params["guild_id"] = guild_id
 
     log.info("Checking purchase with params %s", d(params))
-    site = requests.get(
-        "https://voxelfox.co.uk/api/portal/check",
-        params=params,
-    )
+    try:
+        site = requests.get(
+            "https://voxelfox.co.uk/api/portal/check",
+            params=params,
+            timeout=1.5,
+        )
+    except Exception as e:
+        log.error("Error checking purchase: %s", e)
+        return False
     log.info("Response from site: %s", site.text)
     data = site.json()
     return data["result"]

@@ -41,11 +41,15 @@ async def check(
     }
 
     log.info("Checking purchase with params %s", d(params))
-    if session is None:
-        async with aiohttp.ClientSession() as session:
-            site = await session.get(**args)
-    else:
-        site = await session.get(**args)
+    try:
+        if session is None:
+            async with aiohttp.ClientSession() as session:
+                site = await session.get(**args, timeout=1.5)
+        else:
+            site = await session.get(**args, timeout=1.5)
+    except Exception as e:
+        log.error("Error checking purchase: %s", e)
+        return False
     log.info("Response from site: %s", await site.text())
     data = await site.json()
     return data["result"]
