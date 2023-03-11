@@ -34,7 +34,10 @@ class CheckType(enum.Enum):
     GUILD = enum.auto()
 
 
-def guild_is_active(product_name: str):
+def guild_is_active(
+        *,
+        product_name: str | None = None,
+        product_id: str | None = None):
     async def predicate(ctx: ContextType | discord.Guild):
         if isinstance(ctx, commands.Context):
             if ctx.guild is None:
@@ -46,6 +49,7 @@ def guild_is_active(product_name: str):
             guild_id = ctx.id
         v = await acheck(
             product_name=product_name,
+            product_id=product_id,
             guild_id=guild_id,
         )
         if v:
@@ -54,7 +58,10 @@ def guild_is_active(product_name: str):
     return commands.check(predicate)
 
 
-def user_is_active(product_name: str):
+def user_is_active(
+        *,
+        product_name: str | None = None,
+        product_id: str | None = None):
     async def predicate(ctx: ContextType):
         if isinstance(ctx, commands.Context):
             user_id = ctx.author.id
@@ -64,6 +71,7 @@ def user_is_active(product_name: str):
             user_id = ctx.id
         v = await acheck(
             product_name=product_name,
+            product_id=product_id,
             user_id=user_id,
         )
         if v:

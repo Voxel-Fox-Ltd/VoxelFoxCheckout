@@ -17,8 +17,9 @@ __all__ = (
 
 
 async def check(
-        product_name: str,
         *,
+        product_name: str | None = None,
+        product_id: str | None = None,
         user_id: Optional[int] = None,
         guild_id: Optional[int] = None,
         session: Optional[aiohttp.ClientSession] = None) -> bool:
@@ -26,15 +27,25 @@ async def check(
     Check if a given user/guild has an active purchase for the given product.
     """
 
+    params: dict[str, Any] = {}
+
     if user_id is not None and guild_id is not None:
         raise ValueError("Only one of user_id or guild_id can be provided.")
-    params: dict[str, Any] = {
-        "product_name": product_name,
-    }
+
+    if product_name is not None and product_id is not None:
+        raise ValueError("Only one of user_id or guild_id can be provided.")
+    elif product_name is None and product_id is None:
+        raise ValueError("Only one of user_id or guild_id can be provided.")
+    elif product_name:
+        params["product_name"] = product_name
+    elif product_id:
+        params["product_id"] = product_id
+
     if user_id is not None:
         params["user_id"] = user_id
     elif guild_id is not None:
         params["guild_id"] = guild_id
+
     args = {
         "url": "https://voxelfox.co.uk/api/portal/check",
         "params": params,
